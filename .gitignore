@@ -1,0 +1,18 @@
+# Ignore Terraform state files
+terraform.tfstate
+terraform.tfstate.backup
+
+# Ignore crash logs and logs
+crash.log
+*.log
+
+# Ignore Terraform configuration files that store secrets
+.terraform/
+.terraform.lock.hcl
+
+# Ignore plan output files
+*.tfplan
+
+# Ignore any temporary files
+*.bak
+*.swp
