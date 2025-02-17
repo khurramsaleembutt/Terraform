@@ -9,12 +9,12 @@ resource "random_string" "random" {
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "terraform-state-${random_string.random.result}"
 
-  # Add force_destroy to allow deletion of bucket contents
-  force_destroy = true
+  # Add force_destroy to prevent deletion of bucket and its contents
+  force_destroy = false
 
-  # Prevent accidental deletion of this S3 bucket at the IaC level and works at terraform planning level
+  # Prevent accidental deletion of this S3 bucket at the terraform level
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 }
 
@@ -56,10 +56,10 @@ resource "aws_dynamodb_table" "terraform_state_lock" {
   read_capacity               = 10            # Added for free tier
   write_capacity              = 10            # Added for free tier
   hash_key                    = "LockID"
-  deletion_protection_enabled = false
+  deletion_protection_enabled = true
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 
   attribute {
